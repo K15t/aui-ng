@@ -1,0 +1,29 @@
+{
+  "name": "aui-ng",
+  "version": "0.0.0",
+  "homepage": "https://github.com/K15t/aui-ng",
+  "authors": [
+    "K15T"
+  ],
+  "description": "Angular.JS AUI components",
+  "main": "src/aui-ng.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "angular",
+    "aui",
+    "ng"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-sanitize": "~1.4.1"
+  }
+}
