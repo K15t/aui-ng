@@ -7,9 +7,8 @@
             return {
                 restrict: 'A',
                 link: function(scope, elm, attrs) {
-                    var $el = AJS.$(elm);
                     var options = scope.$eval(attrs.anDatePicker) || {};
-                    $el.datepicker(options);
+                    elm.datepicker(options);
                 }
             };
         }

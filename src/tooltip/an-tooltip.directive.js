@@ -15,7 +15,7 @@
                             return scope.$eval(attrs.anTooltip);
                         };
 
-                        AJS.$(elm).tooltip(options);
+                        elm.tooltip(options);
                     };
 
                     scope.$watch(attrs.anTooltip, compile);

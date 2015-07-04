@@ -8,7 +8,6 @@
                 restrict: 'A',
                 require: 'ngModel',
                 link: function(scope, elm, attrs, ctrl) {
-                    var $el = AJS.$(elm);
                     var options = scope.$eval(attrs.anSelect2) || {};
 
                     var onChange = function(e) {
@@ -21,19 +20,19 @@
                         }
                     };
 
-                    $el.on('change', onChange);
+                    elm.on('change', onChange);
 
                     scope.$on('$destroy', function() {
-                        $el.auiSelect2('destroy');
-                        $el.off('change', onChange);
+                        elm.auiSelect2('destroy');
+                        elm.off('change', onChange);
                     });
 
                     ctrl.$render = function() {
-                        $el.auiSelect2('val', ctrl.$viewValue);
+                        elm.auiSelect2('val', ctrl.$viewValue);
                     };
 
                     $timeout(function() {
-                        $el.auiSelect2(options);
+                        elm.auiSelect2(options);
                     });
                 }
             };
