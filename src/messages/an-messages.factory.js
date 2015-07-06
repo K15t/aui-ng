@@ -1,5 +1,5 @@
 ;(function(angular) {
-console.log('load');
+
     'use strict';
 
     angular.module('k15t.auiNg')
