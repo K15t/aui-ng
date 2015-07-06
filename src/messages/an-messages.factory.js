@@ -31,7 +31,7 @@
                     throw new Error('a container with id ' + id + ' does not exist');
                 }
 
-                containers[id].addMessage(opts);
+                return containers[id].addMessage(opts);
             };
 
             return {
