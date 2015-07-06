@@ -22,6 +22,28 @@ In general it is more flexible than Dialog1/2 and fits better into the angular w
 A set of directives which can be used to create pages and panels. Think of the Dialog1 pages and
 panels feature but as standalone directives and not coupled to the dialog scenario.
 
+#### Example
+
+```html
+<div an-pages>
+    <div an-page="startpage">
+        <button ng-click="$gotoPage('second-page')">goto the second page</button>
+    </div>
+
+    <div an-page="second-page">
+        <div an-panel>
+            <h1>First Panel!</h1>
+            <button ng-click="$nextPanel()" ng-show="$hasNextPanel()">goto next panel</button>
+        </div>
+
+        <div an-panel>
+            <h1>Second Panel!</h1>
+            <button ng-click="$prevPanel()" ng-show="$hasPrevPanel()">goto prev panel</button>
+        </div>
+    </div>
+</div>
+```
+
 ### DatePicker
 
 A directive which maps to `AJS datepicker`
