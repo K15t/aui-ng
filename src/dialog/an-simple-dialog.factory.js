@@ -44,7 +44,7 @@
                 };
 
                 var create = function(opts) {
-                    var locals = angular.extend({}, opts.locals, {
+                    var locals = angular.extend({}, opts.locals || {}, {
                         labels: angular.extend({}, defaults.locals.labels, opts.locals.labels || {}),
                         classes: angular.extend({}, defaults.locals.classes, opts.locals.classes || {}),
                         styles: angular.extend({}, defaults.locals.styles, opts.locals.styles || {})
