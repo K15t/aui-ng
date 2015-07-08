@@ -5,17 +5,22 @@
     angular.module('k15t.auiNg')
         .directive('anMessagesContainer', function(anMessages) {
 
+            // jscs:disable
             var defaultTemplate = [
                 '<div class="aui-messages an-messages-container">',
-                '   <div ng-repeat="message in messagesCtrl.messages" class="aui-message aui-message-{{ message.severity }}">',
+                '   <div ng-repeat="message in messagesCtrl.messages" ng-style="message.styleContainer" class="aui-message aui-message-{{ message.severity }}">',
                 '       <p ng-if="message.title" class="title">',
                 '           <span class="aui-icon icon-{{ message.severity }}"></span>',
                 '           <strong ng-bind="message.title"></strong>',
                 '       </p>',
-                '       <p ng-if="message.message" ng-bind-html="message.message"></p>',
+                '       <div ng-style="message.styleMessageWrapper">',
+                '           <p ng-if="message.message" ng-bind-html="message.message"></p>',
+                '           <pre ng-if="message.details" ng-bind-html="message.details"></pre>',
+                '       </div>',
                 '   </div>',
                 '</div>'
             ].join('\n');
+            // jscs:enable
 
             return {
                 restrict: 'A',
