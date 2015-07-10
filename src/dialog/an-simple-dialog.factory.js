@@ -9,7 +9,7 @@
                 var defaultTemplate = [
                     '<div class="an-dialog-wrapper">',
                     '   <div class="an-dialog-wrapper-inner">',
-                    '       <div class="an-dialog {{ classes.dialog }}" an-pages ng-style="styles.dialog">',
+                    '       <div class="an-dialog {{ classes.dialog }}" ng-style="styles.dialog">',
                     '           <div class="an-dialog-components">',
                     '               <header class="an-dialog-header {{ classes.header }}" ng-style="styles.header">',
                     '                   <h2 class="an-dialog-header-title {{ classes.title }}" ng-style="styles.title">{{ labels.title }}</h2>',

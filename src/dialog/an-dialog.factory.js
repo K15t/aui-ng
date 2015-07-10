@@ -12,7 +12,7 @@
                 var defaultTemplate = [
                     '<div class="an-dialog-wrapper">',
                     '   <div class="an-dialog-wrapper-inner">',
-                    '       <div class="an-dialog {{ classes.dialog }}" an-pages ng-style="styles.dialog">',
+                    '       <div class="an-dialog {{ classes.dialog }}" ng-style="styles.dialog">',
                     '           <div class="an-dialog-components">',
                     '               <div ng-bind-html="content"></div>',
                     '           </div>',
