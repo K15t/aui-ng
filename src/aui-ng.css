@@ -30,6 +30,11 @@
     vertical-align: middle;
 }
 
+.an-dialog-wrapper-inner .button-panel-link,
+.an-dialog-wrapper-inner .aui-button {
+    cursor: pointer !important;
+}
+
 .an-dialog {
     position: relative;
     background: #fff;
