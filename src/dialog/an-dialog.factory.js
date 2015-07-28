@@ -27,7 +27,7 @@
 
                 var onKeyDown = function(ev) {
                     if (stack.length && stack[stack.length - 1].options.closeOnEscape && ev.keyCode === 27) {
-                        stack[stack.length - 1].close();
+                        stack[stack.length - 1].scope.$close();
                     }
                 };
 
@@ -107,6 +107,7 @@
                             throw new Error('The template contains no elements; you need to wrap text nodes');
                         }
                         scope = options.scope ? options.scope.$new() : $rootScope.$new();
+                        dialog.scope = scope;
 
                         angular.extend(scope, options.locals, {
                             $close: close,
