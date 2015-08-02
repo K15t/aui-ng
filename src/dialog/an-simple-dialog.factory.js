@@ -3,7 +3,7 @@
 
     angular.module('k15t.auiNg').
         factory('anSimpleDialog',
-            function(anDialog, $q) {
+            function(anDialog, $q, anDialogUtils) {
 
                 // jscs:disable
                 var defaultTemplate = [
@@ -44,13 +44,7 @@
                 };
 
                 var create = function(opts) {
-                    var locals = angular.extend({}, opts.locals || {}, {
-                        labels: angular.extend({}, defaults.locals.labels, opts.locals.labels || {}),
-                        classes: angular.extend({}, defaults.locals.classes, opts.locals.classes || {}),
-                        styles: angular.extend({}, defaults.locals.styles, opts.locals.styles || {})
-                    });
-
-                    return anDialog.create(angular.extend({}, defaults, opts, {locals:locals}));
+                    return anDialog.create(anDialogUtils.extendOptions(defaults, opts));
                 };
 
                 return {

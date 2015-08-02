@@ -4,7 +4,7 @@
 
     angular.module('k15t.auiNg').
         factory('anConfirmDialog',
-            function(anSimpleDialog) {
+            function(anSimpleDialog, anDialogUtils) {
 
                 var defaults = {
                     controller: ['$scope', 'dialog', function($scope, dialog) {
@@ -15,7 +15,7 @@
                 };
 
                 var create = function(opts) {
-                    return anSimpleDialog.create(angular.extend({}, defaults, opts));
+                    return anSimpleDialog.create(anDialogUtils.extendOptions(defaults, opts));
                 };
 
                 return {

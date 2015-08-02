@@ -4,7 +4,7 @@
 
     angular.module('k15t.auiNg').
         factory('anDialog',
-            function($animate, $compile, $rootScope, $controller, $q, $http, $templateCache) {
+            function($animate, $compile, $rootScope, $controller, $q, $http, $templateCache, anDialogUtils) {
                 var stack = [];
                 var startZindex = 3000;
                 var $body = angular.element('body');
@@ -84,7 +84,7 @@
 
                 // this code is highly inspired by https://github.com/btford/angular-modal
                 var create = function(opts) {
-                    var options = angular.extend({}, defaults, opts);
+                    var options = anDialogUtils.extendOptions(defaults, opts);
                     var scope;
                     var element;
 

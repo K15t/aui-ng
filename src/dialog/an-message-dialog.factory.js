@@ -4,7 +4,7 @@
 
     angular.module('k15t.auiNg').
         factory('anMessageDialog',
-            function(anSimpleDialog, $q) {
+            function(anSimpleDialog, $q, anDialogUtils) {
 
                 // jscs:disable
                 var defaultTemplate = [
@@ -42,17 +42,19 @@
                         $scope.$submit = function() {
                             dialog.close(true);
                         };
-                    }]
+                    }],
+                    locals: {
+                        styles: {
+                            content: {
+                                padding: '20px'
+                            }
+                        }
+                    }
                 };
 
                 var create = function(severity, title, message, opts) {
-                    return anSimpleDialog.create(angular.extend({}, defaults, {
+                    return anSimpleDialog.create(anDialogUtils.extendOptions(defaults, {
                         locals: {
-                            styles: {
-                                content: {
-                                    padding: '20px'
-                                }
-                            },
                             labels: {
                                 title: title || '',
                                 cancel: 'close' // TODO: this needs some internationalization
@@ -60,7 +62,7 @@
                             message: message,
                             severity: severity
                         }
-                    }, opts || {}));
+                    }, opts));
                 };
 
                 return {
