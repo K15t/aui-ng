@@ -17,7 +17,7 @@
                 return locals;
             };
 
-            var extendOptions = function(defaults, opts) {
+            var extendOptions = function() {
                 var target = {};
                 var args = [].slice.call(arguments, 0);
 
