@@ -68,6 +68,7 @@
                     closeOnEscape: true,
                     closeOnBlanketClick: true,
                     onClose: angular.noop,
+                    promises: [],
                     locals: {}
                 };
 
@@ -127,9 +128,12 @@
                             }
                         }
 
-                        $compile(element)(scope);
-                        element.css('z-index', startZindex + stack.length * 2);
-                        return $animate.enter(element, $body);
+                        return $q.all(options.promises).then(function() {
+                            addDialogToStack(dialog);
+                            $compile(element)(scope);
+                            element.css('z-index', startZindex + stack.length * 2);
+                            return $animate.enter(element, $body);
+                        });
                     };
 
                     var close = function() {
@@ -148,12 +152,16 @@
                         });
                     };
 
-                    var dialog = {
-                        close: close,
-                        options: options
+                    var waitFor = function(promise) {
+                        options.promises.push(promise);
                     };
 
-                    addDialogToStack(dialog);
+                    var dialog = {
+                        close: close,
+                        options: options,
+                        waitFor: waitFor
+                    };
+
                     open();
 
                     return dialog;
