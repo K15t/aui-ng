@@ -13,13 +13,7 @@
                     '       <div class="an-dialog {{ classes.dialog }}" ng-style="styles.dialog">',
                     '           <div class="an-dialog-components">',
                     '               <section class="an-dialog-content {{ classes.content }}" ng-style="styles.content">',
-                    '                   <div class="aui-message aui-message-{{ severity }}">',
-                    '                       <p ng-if="labels.title" class="title">',
-                    '                           <span class="aui-icon icon-{{ severity }}"></span>',
-                    '                           <strong>{{ labels.title }}</strong>',
-                    '                       </p>',
-                    '                       <p ng-if="message">{{ message }}</p>',
-                    '                   </div>',
+                    '                   <div an-message="message"></div>',
                     '               </section>',
                     '               <footer class="an-dialog-footer">',
                     '                   <div class="an-dialog-footer-actions">',
@@ -52,15 +46,13 @@
                     }
                 };
 
-                var create = function(severity, title, message, opts) {
+                var create = function(message, opts) {
                     return anSimpleDialog.create(anDialogUtils.extendOptions(defaults, {
                         locals: {
                             labels: {
-                                title: title || '',
                                 cancel: 'close' // TODO: this needs some internationalization
                             },
-                            message: message,
-                            severity: severity
+                            message: message
                         }
                     }, opts));
                 };
