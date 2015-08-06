@@ -1,6 +1,6 @@
 {
   "name": "aui-ng",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Angular.JS AUI components",
   "main": "src/aui-ng.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "url": "https://github.com/K15t/aui-ng/issues"
   },
   "homepage": "https://github.com/K15t/aui-ng#readme",
-  "dependencies": {
+  "devDependencies": {
     "del": "1.1.1",
     "gulp": "3.9.0",
     "gulp-concat": "2.4.3",
