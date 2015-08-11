@@ -8,6 +8,7 @@
                 var stack = [];
                 var startZindex = 3000;
                 var $body = angular.element('body');
+                var orgOverflow = $body.css('overflow');
 
                 var defaultTemplate = [
                     '<div class="an-dialog-wrapper">',
@@ -51,7 +52,7 @@
 
                     if (!stack.length) {
                         getBlanket().remove();
-                        $body.css('overflow', 'auto');
+                        $body.css('overflow', orgOverflow);
                         document.removeEventListener('keydown', onKeyDown);
                     }
                 };
