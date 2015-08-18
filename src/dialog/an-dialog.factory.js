@@ -11,7 +11,7 @@
                 var orgOverflow = $body.css('overflow');
 
                 var defaultTemplate = [
-                    '<div class="an-dialog-wrapper">',
+                    '<div class="an-dialog-wrapper" tabindex="-1">',
                     '   <div class="an-dialog-wrapper-inner">',
                     '       <div class="an-dialog {{ classes.dialog }}" ng-style="styles.dialog">',
                     '           <div class="an-dialog-components">',
@@ -133,7 +133,9 @@
                             addDialogToStack(dialog);
                             $compile(element)(scope);
                             element.css('z-index', startZindex + stack.length * 2);
-                            return $animate.enter(element, $body);
+                            return $animate.enter(element, $body).then(function() {
+                                element.focus();
+                            });
                         });
                     };
 
