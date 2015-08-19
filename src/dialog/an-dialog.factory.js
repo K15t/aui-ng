@@ -68,6 +68,7 @@
                     controllerAs: 'dialogCtrl',
                     closeOnEscape: true,
                     closeOnBlanketClick: true,
+                    onOpen: angular.noop,
                     onClose: angular.noop,
                     promises: [],
                     locals: {}
@@ -91,7 +92,7 @@
                     var element;
 
                     var open = function() {
-                        getTemplate(options.template).then(function(wrapperContent) {
+                        return getTemplate(options.template).then(function(wrapperContent) {
                             if (!options.contentTemplate) {
                                 return wrapperContent;
                             }
@@ -165,9 +166,10 @@
                         waitFor: waitFor
                     };
 
-                    open();
-
-                    return dialog;
+                    return open().then(function() {
+                        options.onOpen(dialog);
+                        return dialog;
+                    });
                 };
 
                 return {
