@@ -28,7 +28,13 @@
                     });
 
                     ctrl.$render = function() {
-                        elm.auiSelect2('val', ctrl.$viewValue);
+                        $timeout(function() {
+                            if (options.selectData) {
+                                elm.auiSelect2('data', ctrl.$modelValue);
+                            } else {
+                                elm.auiSelect2('val', ctrl.$viewValue);
+                            }
+                        });
                     };
 
                     $timeout(function() {
