@@ -11,7 +11,14 @@
                         $scope.$submit = function() {
                             dialog.close(true);
                         };
-                    }]
+                    }],
+                    locals: {
+                        styles: {
+                            dialog: {
+                                width: '400px'
+                            }
+                        }
+                    }
                 };
 
                 var create = function(opts) {
