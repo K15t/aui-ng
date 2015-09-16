@@ -45,8 +45,13 @@
 }
 
 .an-dialog-large {
-    width: 90% !important;
-    height: 90% !important;
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    bottom: 50px;
+    left: 50px;
+    width: auto !important;
+    height: auto !important;
 }
 
 .an-dialog-large .an-dialog-header {
