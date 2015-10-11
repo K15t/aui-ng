@@ -13,7 +13,7 @@
                     '           <div class="an-dialog-components">',
                     '               <header class="an-dialog-header {{ classes.header }}" ng-style="styles.header">',
                     '                   <h2 class="an-dialog-header-title {{ classes.title }}" ng-style="styles.title">{{ labels.title }}</h2>',
-                    '                   <a class="an-dialog-header-close {{ classes.closes }}" ng-style="styles.close" ng-click="$close()"><span class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span></a>',
+                    '                   <a class="an-dialog-header-close {{ classes.closes }}" ng-style="styles.close" ng-click="$close()"><span class="aui-icon aui-icon-small aui-iconfont-close-dialog">{{ labels.cancel }}</span></a>',
                     '               </header>',
                     '               <section class="an-dialog-content {{ classes.content }}" ng-style="styles.content" ng-bind-html="content"></section>',
                     '               <footer class="an-dialog-footer">',

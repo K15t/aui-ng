@@ -12,6 +12,10 @@
                     '   <div class="an-dialog-wrapper-inner">',
                     '       <div class="an-dialog {{ classes.dialog }}" ng-style="styles.dialog">',
                     '           <div class="an-dialog-components">',
+                    '               <header class="an-dialog-header {{ classes.header }}" ng-style="styles.header">',
+                    '                   <h2 class="an-dialog-header-title {{ classes.title }}" ng-style="styles.title">{{ labels.title }}</h2>',
+                    '                   <a class="an-dialog-header-close {{ classes.closes }}" ng-style="styles.close" ng-click="$close()"><span class="aui-icon aui-icon-small aui-iconfont-close-dialog">{{ labels.cancel }}</span></a>',
+                    '               </header>',
                     '               <section class="an-dialog-content {{ classes.content }}" ng-style="styles.content">',
                     '                   <div an-message="message"></div>',
                     '               </section>',
@@ -50,7 +54,7 @@
                     return anSimpleDialog.create(anDialogUtils.extendOptions(defaults, {
                         locals: {
                             labels: {
-                                cancel: 'close' // TODO: this needs some internationalization
+                                cancel: 'Close'
                             },
                             message: message
                         }
