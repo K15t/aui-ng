@@ -21,7 +21,7 @@
                     '               </section>',
                     '               <footer class="an-dialog-footer">',
                     '                   <div class="an-dialog-footer-actions">',
-                    '                       <a class="button-panel-link {{ classes.cancel }}" ng-style="styles.cancel" ng-click="$close()">{{ labels.cancel }}</a>',
+                    '                       <button class="aui-button aui-button-link {{ classes.cancel }}" ng-style="styles.cancel" ng-click="$close()">{{ labels.cancel }}</button>',
                     '                   </div>',
                     '               </footer>',
                     '           </div>',

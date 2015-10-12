@@ -162,21 +162,7 @@
 }
 
 .an-dialog-footer-actions:after {
-    content:'';
-    display:block;
+    content: '';
+    display: block;
     clear: both;
-}
-
-.an-dialog-footer-actions button,
-.an-dialog-footer-actions a {
-    margin: 0 10px 0 0 !important;
-}
-
-.an-dialog-footer-hint a {
-    margin-left: 10px;
-}
-
-.an-dialog-footer-hint a,
-.an-dialog-footer-actions a {
-    line-height: 2;
 }
