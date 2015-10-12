@@ -18,7 +18,7 @@
                     '               <section class="an-dialog-content {{ classes.content }}" ng-style="styles.content" ng-bind-html="content"></section>',
                     '               <footer class="an-dialog-footer">',
                     '                   <div class="an-dialog-footer-actions">',
-                    '                       <button class="aui-button {{ classes.submit }}" ng-style="styles.submit" ng-disabled="$disableSubmit()" ng-click="$submit()">{{ labels.submit }}</button>',
+                    '                       <button class="aui-button aui-button-primary {{ classes.submit }}" ng-style="styles.submit" ng-disabled="$disableSubmit()" ng-click="$submit()">{{ labels.submit }}</button>',
                     '                       <button class="aui-button aui-button-link {{ classes.cancel }}" ng-style="styles.cancel" ng-click="$close()">{{ labels.cancel }}</button>',
                     '                   </div>',
                     '               </footer>',
