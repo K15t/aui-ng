@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('k15t.auiNg')
-        .directive('anPages', function() {
+        .directive('anPages', function(anPagesManager) {
             return {
                 scope: true,
                 restrict: 'A',
@@ -89,6 +89,14 @@
                         return that.gotoPage(currentPageIdx - 1);
                     };
 
+                    this.getPage = function(idxAlias) {
+                        var idx = normalizeIdx(idxAlias);
+                        if (!idx) {
+                            return false;
+                        }
+                        return pages[idx];
+                    };
+
                     $scope.$gotoPage = this.gotoPage;
                     $scope.$hasNextPage = this.hasNextPage;
                     $scope.$hasPrevPage = this.hasPrevPage;
@@ -99,7 +107,13 @@
                     };
                 },
                 link: function(scope, element, attrs, anPages) {
+                    var unregister;
                     anPages.gotoPage(0);
+
+                    if (attrs.anPages) {
+                        unregister = anPagesManager.register(attrs.anPages, anPages);
+                        scope.$on('$destroy', unregister);
+                    }
                 }
             };
         }

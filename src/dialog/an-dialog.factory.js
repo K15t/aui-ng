@@ -163,13 +163,16 @@
                     var dialog = {
                         close: close,
                         options: options,
-                        waitFor: waitFor
+                        waitFor: waitFor,
+                        openPromise: null
                     };
 
-                    return open().then(function() {
+                    dialog.openPromise = open().then(function() {
                         options.onOpen(dialog);
                         return dialog;
                     });
+
+                    return dialog;
                 };
 
                 return {
