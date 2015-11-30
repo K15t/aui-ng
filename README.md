@@ -44,6 +44,16 @@ panels feature but as standalone directives and not coupled to the dialog scenar
 </div>
 ```
 
+#### Programmatic usage
+
+```javascript
+// use the anPagesManager service to get access to
+// a specific anPages instance
+
+var myPages = anPagesManager.getById('my-pages-id');
+myPages.gotoPage('second-page');
+```
+
 ### DatePicker
 
 A directive which maps to `AJS datepicker`
