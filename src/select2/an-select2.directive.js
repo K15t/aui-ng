@@ -10,6 +10,10 @@
                 link: function(scope, elm, attrs, ctrl) {
                     var options = scope.$eval(attrs.anSelect2) || {};
 
+                    if (angular.isUndefined(angular.element.fn.auiSelect2)) {
+                        throw new Error('auiSelect2 is not installed');
+                    }
+
                     var onChange = function(e) {
                         var data = elm.auiSelect2(options.selectData ? 'data' : 'val');
                         e.stopImmediatePropagation();
@@ -27,15 +31,21 @@
                         elm.off('change', onChange);
                     });
 
-                    ctrl.$render = function() {
+                    // we are using $watch here, instead
+                    // of modelCtrl.$render. $render does not
+                    // get triggered if the value set is an
+                    // object or an array.
+                    scope.$watch(function() {
+                        return ctrl.$modelValue;
+                    }, function(newVal) {
                         $timeout(function() {
                             if (options.selectData) {
-                                elm.auiSelect2('data', ctrl.$modelValue);
+                                elm.auiSelect2('data', newVal);
                             } else {
-                                elm.auiSelect2('val', ctrl.$viewValue);
+                                elm.auiSelect2('val', newVal);
                             }
                         });
-                    };
+                    });
 
                     $timeout(function() {
                         elm.auiSelect2(options);
