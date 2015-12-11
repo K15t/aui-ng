@@ -1,6 +1,6 @@
 {
   "name": "aui-ng",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Angular.JS AUI components",
   "main": "src/aui-ng.js",
   "scripts": {
@@ -21,6 +21,9 @@
     "url": "https://github.com/K15t/aui-ng/issues"
   },
   "homepage": "https://github.com/K15t/aui-ng#readme",
+  "devDependencies": {
+    "angular-sanitize": "~1.4.1"
+  },
   "devDependencies": {
     "del": "1.1.1",
     "gulp": "3.9.0",
