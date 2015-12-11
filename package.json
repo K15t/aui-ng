@@ -21,7 +21,7 @@
     "url": "https://github.com/K15t/aui-ng/issues"
   },
   "homepage": "https://github.com/K15t/aui-ng#readme",
-  "devDependencies": {
+  "dependencies": {
     "angular-sanitize": "~1.4.1"
   },
   "devDependencies": {
