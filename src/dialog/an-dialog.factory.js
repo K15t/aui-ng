@@ -11,7 +11,7 @@
                 var orgOverflow = $body.css('overflow');
 
                 var defaultTemplate = [
-                    '<div class="an-dialog-wrapper" ng-class="{\'an-dialog-loading\': $isLoading, \'an-dialog-loaded\': !$isLoading }"tabindex="-1">',
+                    '<div class="an-dialog-wrapper" ng-class="{\'an-dialog-loading\': $isLoading, \'an-dialog-loaded\': !$isLoading }" tabindex="-1">',
                     '   <div class="an-dialog-wrapper-inner">',
                     '       <div class="an-dialog {{ classes.dialog }}" ng-style="styles.dialog">',
                     '           <div class="an-dialog-components">',

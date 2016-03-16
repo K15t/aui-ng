@@ -7,7 +7,7 @@
 
                 // jscs:disable
                 var defaultTemplate = [
-                    '<div class="an-dialog-wrapper">',
+                    '<div class="an-dialog-wrapper" ng-class="{\'an-dialog-loading\': $isLoading, \'an-dialog-loaded\': !$isLoading }">',
                     '   <div class="an-dialog-wrapper-inner">',
                     '       <div class="an-dialog {{ classes.dialog }}" ng-style="styles.dialog">',
                     '           <div class="an-dialog-components">',
