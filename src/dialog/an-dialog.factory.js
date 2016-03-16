@@ -11,7 +11,7 @@
                 var orgOverflow = $body.css('overflow');
 
                 var defaultTemplate = [
-                    '<div class="an-dialog-wrapper" tabindex="-1">',
+                    '<div class="an-dialog-wrapper" ng-class="{\'an-dialog-loading\': $isLoading, \'an-dialog-loaded\': !$isLoading }"tabindex="-1">',
                     '   <div class="an-dialog-wrapper-inner">',
                     '       <div class="an-dialog {{ classes.dialog }}" ng-style="styles.dialog">',
                     '           <div class="an-dialog-components">',
@@ -116,6 +116,7 @@
                             $close: close,
                             $submit: close,
                             $disableSubmit: angular.noop,
+                            $isLoading: true,
                             dialog: dialog
                         });
 
@@ -135,6 +136,7 @@
                             $compile(element)(scope);
                             element.css('z-index', startZindex + stack.length * 2);
                             return $animate.enter(element, $body).then(function() {
+                                scope.$isLoading = false;
                                 element.focus();
                             });
                         });
