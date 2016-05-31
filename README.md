@@ -66,6 +66,32 @@ A directive which maps to `AUI Select2`
 
 A directive which maps to `AJS tooltip`
 
+### Dropdown2
+
+`an-dropdown2` is a replacement for `AUI Dropdown2`. It can be used by adding the `an-dropdown2` directive to an element,
+which is used as the trigger. The dropdown list is referenced by passing its id to the `an-dropdown2` directive.
+
+#### Properties
+
+* an-dropdown2: id of the dropdown list (required)
+* an-dropdown2-align: alignment of the dropdown list - `left` or `right` (optional)
+
+
+#### Example
+
+```html
+<button class="aui-button" an-dropdown2="food-dropdown" an-dropdown2-align="left">eat</button>
+
+<div class="an-dropdown2" id="food-dropdown">
+    <ul class="aui-list-truncate">
+          <li><a href="http://example.com/" tabindex="-1">Ice cream</a></li>
+          <li><a href="http://example.com/" tabindex="-1">Chocolate</a></li>
+          <li><a href="http://example.com/" tabindex="-1">Lollipop</a></li>
+          <li><a href="http://example.com/" tabindex="-1">Jelly Beans</a></li>
+    </ul>
+</div>
+```
+
 ### Messages
 
 Messages contains the directive `an-messages-container` and the factory
