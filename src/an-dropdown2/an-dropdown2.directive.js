@@ -14,7 +14,6 @@
             // ui status
             var isOpened = false;
             var isTriggerButtonFocused = false;
-            var ignoreCancel = false;
 
             // attributes
             var dropdownId = attrs.anDropdown2;
@@ -30,12 +29,7 @@
               .on('blur', blurHandler);
 
             function toggleHandler (e) {
-              // set flag to prevent dropdown cancelation, preventDefault doesn't work here
-              // because we do want the event to bubble up to cancel previously selected dropdowns
-              ignoreCancel = true;
-
               selectedItem = null;
-
               toggleDropdown();
             }
 
@@ -47,16 +41,14 @@
               isTriggerButtonFocused = false;
             }
 
-            $(document)
+            angular.element(document)
               .on('click', cancelHandler)
               .on('keydown', keyboardHandler);
 
-            function cancelHandler () {
-              if (!ignoreCancel && isOpened) {
+            function cancelHandler (evt) {
+              if (!$elm[0].contains(evt.target) && isOpened) {
                 hideDropdown();
               }
-
-              ignoreCancel = false;
             }
 
             function keyboardHandler (evt) {
@@ -112,7 +104,7 @@
             function initDropdown () {
               var offset;
 
-              $dropdown = $('#' + dropdownId);
+              $dropdown = angular.element('#' + dropdownId);
 
               if ($dropdown.length === 0) {
                 console.error('dropdown2 trigger can\'t find menu with the id "' + dropdownId + '"');
@@ -135,7 +127,11 @@
                 .off('focus', focusHandler)
                 .off('blur', blurHandler);
 
-              $(document)
+              if ($dropdown) {
+                $dropdown.remove();
+              }
+
+              angular.element(document)
                 .off('click', cancelHandler)
                 .off('keydown', keyboardHandler);
             });
