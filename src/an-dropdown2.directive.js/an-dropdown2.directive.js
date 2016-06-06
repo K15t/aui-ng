@@ -10,7 +10,10 @@
             var align = attrs.anDropdown2Align;
             var $dropdown = $('#' + attrs.anDropdown2).appendTo(document.body);
 
-            $elm.on('click', toggleHandler);
+            $elm
+              .on('click', toggleHandler)
+              .on('focus', enableKeyboardHandler)
+              .on('blur', disableKeyboardHandler);
 
             function toggleHandler (e) {
               var offset = $elm.offset();
@@ -27,14 +30,34 @@
                 });
             }
 
-            $(document).on('click', cancelHandler);
+            function enableKeyboardHandler () {
+              $(document).on('keyup', escapeKeyHandler);
+            }
+
+            function disableKeyboardHandler () {
+              $(document).off('keyup', escapeKeyHandler);
+            }
+
+            $(document)
+              .on('click', cancelHandler);
 
             function cancelHandler () {
               if (!ignoreCancel) {
-                $dropdown.removeClass('an-dropdown2-show');
+                hideDropdown();
               }
 
               ignoreCancel = false;
+            }
+
+            function escapeKeyHandler (evt) {
+              // esc key
+              if (evt.keyCode === 27) {
+                hideDropdown();
+              }
+            }
+
+            function hideDropdown () {
+              $dropdown.removeClass('an-dropdown2-show');
             }
 
             $elm.on('$destroy', function () {
