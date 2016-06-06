@@ -21,8 +21,7 @@
             var align = attrs.anDropdown2Align;
 
             // elements
-            var $dropdown = $('#' + dropdownId).appendTo(document.body);
-            var $items = $dropdown.find('a');
+            var $dropdown, $items;
             var selectedItem = null;
 
             $elm
@@ -53,7 +52,7 @@
               .on('keydown', keyboardHandler);
 
             function cancelHandler () {
-              if (!ignoreCancel) {
+              if (!ignoreCancel && isOpened) {
                 hideDropdown();
               }
 
@@ -61,7 +60,7 @@
             }
 
             function keyboardHandler (evt) {
-              if (evt.keyCode === ESCAPE_KEY || evt.keyCode === TAB_KEY) {
+              if (isOpened && (evt.keyCode === ESCAPE_KEY || evt.keyCode === TAB_KEY)) {
                 hideDropdown();
 
               } else if (isTriggerButtonFocused && (selectedItem === null  || isOpened === false)) {
@@ -91,14 +90,14 @@
             function toggleDropdown () {
               isOpened = !isOpened;
               if (isOpened) {
-                positionDropdown();
+                initDropdown();
               }
               $dropdown.toggleClass('an-dropdown2-show');
             }
 
             function showDropdown () {
               isOpened = true;
-              positionDropdown();
+              initDropdown();
               $dropdown.addClass('an-dropdown2-show');
             }
 
@@ -107,12 +106,24 @@
               $dropdown.removeClass('an-dropdown2-show');
             }
 
-            function positionDropdown () {
-              var offset = $elm.offset();
-              $dropdown.css({
-                top: offset.top + $elm.outerHeight() - 1,
-                left: align === 'left' ? offset.left : offset.left - $dropdown.outerWidth() + $elm.outerWidth()
-              });
+            function initDropdown () {
+              var offset;
+
+              $dropdown = $('#' + dropdownId);
+
+              if ($dropdown.length === 0) {
+                console.error('dropdown2 trigger can\'t find menu with the id "' + dropdownId + '"');
+
+              } else {
+                $dropdown.appendTo(document.body);
+                $items = $dropdown.find('a');
+
+                offset = $elm.offset();
+                $dropdown.css({
+                  top: offset.top + $elm.outerHeight() - 1,
+                  left: align === 'left' ? offset.left : offset.left - $dropdown.outerWidth() + $elm.outerWidth()
+                });
+              }
             }
 
             $elm.on('$destroy', function () {
