@@ -30,9 +30,9 @@
     vertical-align: middle;
 }
 
-.an-dialog-wrapper-inner .button-panel-link,
-.an-dialog-wrapper-inner .aui-button {
-    cursor: pointer !important;
+.an-dialog-wrapper-inner .aui-button:not([disabled]),
+.an-dialog-wrapper-inner .button-panel-link:not([disabled]) {
+    cursor: pointer!important;
 }
 
 .an-dialog {
