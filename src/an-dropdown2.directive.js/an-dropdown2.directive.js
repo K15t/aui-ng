@@ -65,6 +65,7 @@
 
               } else if (isTriggerButtonFocused && (selectedItem === null  || isOpened === false)) {
                 if (evt.keyCode === DOWN_KEY ||  evt.keyCode === UP_KEY) {
+                  evt.preventDefault();
                   showDropdown();
                   selectItem(0);
                 }
@@ -72,10 +73,12 @@
               } else if (isOpened) {
                 switch (evt.keyCode) {
                   case UP_KEY:
+                    evt.preventDefault();
                     selectItem(selectedItem  - 1);
                     break;
 
                   case DOWN_KEY:
+                    evt.preventDefault();
                     selectItem(selectedItem + 1);
                     break;
                 }
