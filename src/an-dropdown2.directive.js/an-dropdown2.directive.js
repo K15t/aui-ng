@@ -8,23 +8,22 @@
           link: function (scope, $elm, attrs) {
             var ignoreCancel = false;
             var align = attrs.anDropdown2Align;
-            var dropDownId = attrs.anDropdown2;
+            var $dropdown = $('#' + attrs.anDropdown2).appendTo(document.body);
 
             $elm.on('click', toggleHandler);
 
             function toggleHandler (e) {
               var offset = $elm.offset();
-              var $dropDown = $('#' + dropDownId);
 
               // set flag to prevent dropdown cancelation, preventDefault doesn't work here
               // because we do want the event to bubble up to cancel previously selected dropdowns
               ignoreCancel = true;
 
-              $dropDown
+              $dropdown
                 .toggleClass('an-dropdown2-show')
                 .css({
                   top: offset.top + $elm.outerHeight() - 1,
-                  left: align === 'left' ? offset.left : offset.left - $dropDown.outerWidth() + $elm.outerWidth()
+                  left: align === 'left' ? offset.left : offset.left - $dropdown.outerWidth() + $elm.outerWidth()
                 });
             }
 
@@ -32,7 +31,7 @@
 
             function cancelHandler () {
               if (!ignoreCancel) {
-                $('#' + dropDownId).removeClass('an-dropdown2-show');
+                $dropdown.removeClass('an-dropdown2-show');
               }
 
               ignoreCancel = false;
