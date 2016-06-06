@@ -70,6 +70,7 @@ A directive which maps to `AJS tooltip`
 
 `an-dropdown2` is a replacement for `AUI Dropdown2`. It can be used by adding the `an-dropdown2` directive to an element,
 which is used as the trigger. The dropdown list is referenced by passing its id to the `an-dropdown2` directive.
+This implementation currently doesn't support lazy loaded or dynamicaly changing dropdown lists.
 
 #### Properties
 

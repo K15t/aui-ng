@@ -201,7 +201,8 @@
     display: block;
 }
 
-.an-dropdown2 a:hover {
+.an-dropdown2 a:hover,
+.an-dropdown2 a:focus {
     color: #fff;
     background-color: #3b73af;
 }
