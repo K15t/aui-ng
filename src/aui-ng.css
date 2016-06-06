@@ -206,3 +206,11 @@
     color: #fff;
     background-color: #3b73af;
 }
+
+.an-dropdown2-section {
+    border-top: 1px solid #ccc;
+}
+
+.an-dropdown2-section:first-child {
+    border-top: 0;
+}
