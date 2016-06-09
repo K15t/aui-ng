@@ -101,7 +101,10 @@
                 link: function(scope, elm, attrs, ctrls) {
                     var anPages = ctrls[0];
                     var anPage = ctrls[1];
-                    var page = {el: elm};
+                    var page = {
+                        el: elm,
+                        ctrl: anPage
+                    };
                     if (attrs.anPage) {
                         page.alias = attrs.anPage;
                     }
