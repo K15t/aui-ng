@@ -57,23 +57,6 @@
                     }
                 };
 
-                var defaults = {
-                    width: 640,
-                    height: 480,
-                    template: function() {
-                        return $q.when(defaultTemplate);
-                    },
-                    contentTemplate: null,
-                    controller: null,
-                    controllerAs: 'dialogCtrl',
-                    closeOnEscape: true,
-                    closeOnBlanketClick: true,
-                    onOpen: angular.noop,
-                    onClose: angular.noop,
-                    promises: [],
-                    locals: {}
-                };
-
                 var getTemplate = function(template) {
                     if (typeof template === 'function') {
                         return template();
@@ -87,6 +70,23 @@
 
                 // this code is highly inspired by https://github.com/btford/angular-modal
                 var create = function(opts) {
+                    var defaults = {
+                        width: 640,
+                        height: 480,
+                        template: function() {
+                            return $q.when(defaultTemplate);
+                        },
+                        contentTemplate: null,
+                        controller: null,
+                        controllerAs: 'dialogCtrl',
+                        closeOnEscape: true,
+                        closeOnBlanketClick: true,
+                        onOpen: angular.noop,
+                        onClose: angular.noop,
+                        promises: [],
+                        locals: {}
+                    };
+
                     var options = anDialogUtils.extendOptions(defaults, opts);
                     var scope;
                     var element;
