@@ -140,5 +140,9 @@ Or you can remove all messages from a specific message container:
 anMessages.clearMessages('myMessageContainer');
 ```
 
+## Contribute to this project
+If you like to contribute on this project, request a new feature or you find a bug please see [CONTRIBUTING.md](https://github.com/K15t/aui-ng/blob/master/CONTRIBUTING.md)
+for further details.
+
 ## License
-MIT
+Licensed under The MIT License (MIT).
