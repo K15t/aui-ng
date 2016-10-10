@@ -17,6 +17,51 @@ bower install aui-ng --save
 Standalone Dialog service which can be used as replacement for AUIs Dialog1 and Dialog2.
 In general it is more flexible than Dialog1/2 and fits better into the angular world.
 
+Inject `anDialog` into your controller to use the dialog factory. There are convenience factories such as `anConfirmDialog`,
+`anMessageDialog` and `anSimpleDialog` available, which will provide basic templates for different use cases. Call
+`anDialog.create(options)` to create a new dialog. The options object should provide the following properties.
+
+#### Options Object
+
+* `width`: `Number`, width of the dialog, default: 640px
+* `height`: `Number`, height of the dialog, default: 480px
+* `contentTemplate`: `function`, returning a promise with a templatestring or a string containing the path to the content
+template
+* `controller`: `String`, name of a controller
+* `controllerAs`: `String`, alias for the controller which got previously defined, default: 'dialogCtrl'
+* `closeOnEscape`: `Boolean`, closes the dialog on press of ESC key, default: true
+* `closeOnBlanketClick`: `Boolean`, closes the dialog on click outside of the dialog, default: true
+* `onOpen`: `function`, callback which runs once the dialog is open
+* `onClose`: `function`, callback which runs once the dialog got closed
+* `promises`: `Array`, list of promises that will be resolved before showing the the dialog
+* `locals`: `Object`, will be attached to the controller scope
+
+```javascript
+anDialog.open({
+  width: 300,
+  height: 600,
+  contentTemplate: '/templates/dialogTemplate.html',
+  controller: 'myDialogCtrl',
+  closeOnEscape: false,
+  closeOnBlanketClick: false,
+  onOpen: function() {console.log("very open")},
+  onClose: function() {console.log("such close")},
+  locals: {
+    local1: 1,
+    local2: function() {
+      alert("I'm so local")
+    }
+  }
+});
+```
+
+####Scope properties
+
+The controllers scope will provide the following properties by default.
+
+* `$close` or `$submit`: `function`, closes the current dialog
+* `$isLoading`: `Boolean`, show or hide loading indicator
+
 ### Page
 
 A set of directives which can be used to create pages and panels. Think of the Dialog1 pages and
