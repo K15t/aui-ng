@@ -37,7 +37,7 @@ template
 * `locals`: `Object`, will be attached to the controller scope
 
 ```javascript
-anDialog.open({
+anDialog.create({
   width: 300,
   height: 600,
   contentTemplate: '/templates/dialogTemplate.html',
@@ -55,7 +55,7 @@ anDialog.open({
 });
 ```
 
-####Scope properties
+#### Scope properties
 
 The controllers scope will provide the following properties by default.
 
