@@ -30,7 +30,7 @@ template
 * `controller`: `String`, name of a controller
 * `controllerAs`: `String`, alias for the controller which got previously defined, default: 'dialogCtrl'
 * `closeOnEscape`: `Boolean`, closes the dialog on press of ESC key, default: true
-* `closeOnBlanketClick`: `Boolean`, closes the dialog on click outside of the dialog, default: true
+* `closeOnBlanketClick`: `Boolean`, closes the dialog on click outside of the dialog, default: false
 * `onOpen`: `function`, callback which runs once the dialog is open
 * `onClose`: `function`, callback which runs once the dialog got closed
 * `promises`: `Array`, list of promises that will be resolved before showing the the dialog
@@ -43,7 +43,7 @@ anDialog.create({
   contentTemplate: '/templates/dialogTemplate.html',
   controller: 'myDialogCtrl',
   closeOnEscape: false,
-  closeOnBlanketClick: false,
+  closeOnBlanketClick: true,
   onOpen: function() {console.log("very open")},
   onClose: function() {console.log("such close")},
   locals: {

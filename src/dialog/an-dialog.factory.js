@@ -32,10 +32,18 @@
                     }
                 };
 
+                var onBlanketClick = function(ev) {
+                    if (stack.length && stack[stack.length - 1].options.closeOnBlanketClick &&
+                        angular.element(ev.target).hasClass('an-dialog-wrapper-inner')) {
+                        stack[stack.length - 1].scope.$close();
+                    }
+                };
+
                 var addDialogToStack = function(dialog) {
                     if (!stack.length) {
                         $body.append('<div class="an-dialog-blanket"></div>');
                         $body.css('overflow', 'hidden');
+                        $body.on('click', onBlanketClick);
                         document.addEventListener('keydown', onKeyDown);
                     }
                     stack.push(dialog);
@@ -51,6 +59,7 @@
                     getBlanket().css('z-index', startZindex + ((stack.length * 2) - 1));
 
                     if (!stack.length) {
+                        $body.off('click', onBlanketClick);
                         getBlanket().remove();
                         $body.css('overflow', orgOverflow);
                         document.removeEventListener('keydown', onKeyDown);
@@ -80,7 +89,7 @@
                         controller: null,
                         controllerAs: 'dialogCtrl',
                         closeOnEscape: true,
-                        closeOnBlanketClick: true,
+                        closeOnBlanketClick: false,
                         onOpen: angular.noop,
                         onClose: angular.noop,
                         promises: [],
