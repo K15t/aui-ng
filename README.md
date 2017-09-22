@@ -105,7 +105,52 @@ A directive which maps to `AJS datepicker`
 
 ### Select2
 
-A directive which maps to `AUI Select2`
+A directive which maps to `AUI Select2`.
+
+Some notes:
+
+* The directive is in a quite experimental state and might not support everything that select2 supports.
+* The select2 version, which is used by AUI, is 3.5.x (not the latest version).
+* If the option `selectData` is set to `true` then the raw data of the selected option is saved in the model bound to `ng-model`. For example, if `selectData` is set to `true` then the object `{ id: 'foo', 'Foo' }` would be saved in the model and if it is set to `false`, only `foo` would be saved.
+* If a `query`-function is set and an `initSelection`-function is not set and `selectData` is set to `false` then a dataflow is only supported from `select2` to the angular model, but not the other way around (a warning will be shown in the console in this case).
+
+Example usage:
+
+```html
+    <!-- somewhere in your controllers template: -->
+
+    <input name="select-animal"
+        an-select2="$ctrl.getSelect2Options()"
+        type="text"
+        ng-model="$ctrl.selectedAnimal">
+
+    <div>
+        <!--
+            the value of selectedAnimal would be { id: 'dog', text: 'Dog' } for example
+            if the user would select the dog entry because selectData is set to true.
+         -->
+        The selected animal: {{ $ctrl.selectedAnimal }}
+    </div>
+```
+
+```javascript
+    // somewhere in your controller:
+
+    MyController.prototype.getSelect2Options() {
+        const options = [
+            { id: 'dog', text: 'Dog' },
+            { id: 'cat', text: 'Cat' },
+            { id: 'mouse', text: 'Mouse' }
+        ];
+
+        return {
+            selectData: true,
+            allowClear: true,
+            placeholder: 'select animal',
+            data: options
+        };
+    }
+```
 
 ### Tooltip
 

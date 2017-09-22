@@ -1,5 +1,5 @@
 ;(function(angular) {
-
+    
     'use strict';
 
     angular.module('k15t.auiNg')
@@ -12,6 +12,17 @@
 
                     if (angular.isUndefined(angular.element.fn.auiSelect2)) {
                         throw new Error('auiSelect2 is not installed');
+                    }
+
+                    if (angular.isFunction(ctrl.$overrideModelOptions)) {
+                        // if selectData is set to true and an-select2 is bound
+                        // to an input field then ng-change is called two times (see #4).
+                        // this is a small workaround which prevents the first ng-change from
+                        // happening.
+                        // notice that this requires angular >= 1.6 in order to work.
+                        ctrl.$overrideModelOptions({
+                            debounce: 5
+                        });
                     }
 
                     var onChange = function(e) {
@@ -39,10 +50,21 @@
                         return ctrl.$modelValue;
                     }, function(newVal) {
                         $timeout(function() {
+                            var select2Opts = elm.data('select2').opts;
+
                             if (options.selectData) {
                                 elm.auiSelect2('data', newVal);
                             } else {
-                                elm.auiSelect2('val', newVal);
+                                // if a query function is used but initSelection is not set
+                                // then an error will be thrown in the console if we try to
+                                // update the select2 value. that's why we don't support that scenario
+                                // at all atm.
+                                if (select2Opts.query && !select2Opts.initSelection && newVal !== null) {
+                                    console.warn('anSelect2: initSelection should be set if a query function is defined,' +
+                                    ' otherwise it can lead to inconsistities between ngModel and the value which is displayed in select2');
+                                } else {
+                                    elm.auiSelect2('val', newVal);
+                                }
                             }
                         });
                     });
