@@ -99,6 +99,9 @@
                     var options = anDialogUtils.extendOptions(defaults, opts);
                     var scope;
                     var element;
+                    var focusableElems = [];
+                    var firstFocusableElem;
+                    var lastFocusableElem;
 
                     var open = function() {
                         return getTemplate(options.template).then(function(wrapperContent) {
@@ -142,13 +145,66 @@
 
                         return $q.all(options.promises).then(function() {
                             addDialogToStack(dialog);
+
                             $compile(element)(scope);
+
+                            getFocusableElements();
+                            setInitialFocusableElements();
+
+                            element.on('keydown', onDialogKeyDownEvent);
                             element.css('z-index', startZindex + stack.length * 2);
                             return $animate.enter(element, $body).then(function() {
                                 scope.$isLoading = false;
                                 element.focus();
                             });
                         });
+                    };
+
+                    var getFocusableElements = function() {
+                        var focusableEls = element.find('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
+
+                        focusableElems = Array.prototype.slice.call(focusableEls);
+                    };
+
+                    var setInitialFocusableElements = function () {
+                        firstFocusableElem = focusableElems[0];
+                        lastFocusableElem = focusableElems[focusableElems.length - 1];
+                    };
+
+                    var onDialogKeyDownEvent = function(e) {
+                        var KEY_TAB = 9;
+
+                        switch(e.keyCode) {
+                            case KEY_TAB:
+                                if (firstFocusableElem.length === 1) {
+                                    e.preventDefault();
+                                    break;
+                                }
+
+                                if (e.shiftKey) {
+                                    onBackwardTab(e);
+                                } else {
+                                    onForwardTab(e);
+                                }
+
+                                break;
+                            default:
+                                break;
+                        }
+                    };
+
+                    var onBackwardTab = function(e) {
+                        if (document.activeElement === firstFocusableElem) {
+                            e.preventDefault();
+                            lastFocusableElem.focus();
+                        }
+                    };
+
+                    var onForwardTab = function (e) {
+                        if (document.activeElement === lastFocusableElem) {
+                            e.preventDefault();
+                            firstFocusableElem.focus();
+                        }
                     };
 
                     var close = function() {
