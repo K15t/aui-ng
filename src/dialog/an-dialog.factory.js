@@ -7,6 +7,7 @@
             function($animate, $compile, $rootScope, $controller, $q, $http, $templateCache, anDialogUtils) {
                 var stack = [];
                 var startZindex = 3000;
+                var focusableElements = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]';
                 var $body = angular.element('body');
                 var orgOverflow = $body.css('overflow');
 
@@ -39,11 +40,20 @@
                     }
                 };
 
+                var onFocusIn = function (ev) {
+                    var modalElement = $body.find('.an-dialog-wrapper')[0];
+
+                    if (stack.length && !modalElement.contains(ev.target)) {
+                        angular.element(modalElement).find(focusableElements)[0].focus();
+                    }
+                };
+
                 var addDialogToStack = function(dialog) {
                     if (!stack.length) {
                         $body.append('<div class="an-dialog-blanket"></div>');
                         $body.css('overflow', 'hidden');
                         $body.on('click', onBlanketClick);
+                        $body.on('focusin', onFocusIn);
                         document.addEventListener('keydown', onKeyDown);
                     }
                     stack.push(dialog);
@@ -60,6 +70,7 @@
 
                     if (!stack.length) {
                         $body.off('click', onBlanketClick);
+                        $body.off('focusin', onFocusIn);
                         getBlanket().remove();
                         $body.css('overflow', orgOverflow);
                         document.removeEventListener('keydown', onKeyDown);
@@ -99,9 +110,6 @@
                     var options = anDialogUtils.extendOptions(defaults, opts);
                     var scope;
                     var element;
-                    var focusableElems = [];
-                    var firstFocusableElem;
-                    var lastFocusableElem;
 
                     var open = function() {
                         return getTemplate(options.template).then(function(wrapperContent) {
@@ -148,60 +156,12 @@
 
                             $compile(element)(scope);
 
-                            setInitialFocusableElements();
-
-                            element.on('keydown', onDialogKeyDownEvent);
                             element.css('z-index', startZindex + stack.length * 2);
                             return $animate.enter(element, $body).then(function() {
                                 scope.$isLoading = false;
                                 element.focus();
                             });
                         });
-                    };
-
-                    var setInitialFocusableElements = function () {
-                        var focusableEls = element.find('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
-
-                        focusableElems = Array.prototype.slice.call(focusableEls);
-
-                        firstFocusableElem = focusableElems[0];
-                        lastFocusableElem = focusableElems[focusableElems.length - 1];
-                    };
-
-                    var onDialogKeyDownEvent = function(e) {
-                        var KEY_TAB = 9;
-
-                        switch(e.keyCode) {
-                            case KEY_TAB:
-                                if (focusableElems.length === 1) {
-                                    e.preventDefault();
-                                    break;
-                                }
-
-                                if (e.shiftKey) {
-                                    onBackwardTab(e);
-                                } else {
-                                    onForwardTab(e);
-                                }
-
-                                break;
-                            default:
-                                break;
-                        }
-                    };
-
-                    var onBackwardTab = function(e) {
-                        if (document.activeElement === firstFocusableElem) {
-                            e.preventDefault();
-                            lastFocusableElem.focus();
-                        }
-                    };
-
-                    var onForwardTab = function (e) {
-                        if (document.activeElement === lastFocusableElem) {
-                            e.preventDefault();
-                            firstFocusableElem.focus();
-                        }
                     };
 
                     var close = function() {
@@ -213,7 +173,6 @@
                             scope.$emit('$close', args);
                             scope.$destroy();
                             scope = null;
-                            element.off('keydown', onDialogKeyDownEvent);
                             element.remove();
                             element = null;
                             popDialogFromStack();
