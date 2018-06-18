@@ -148,7 +148,6 @@
 
                             $compile(element)(scope);
 
-                            getFocusableElements();
                             setInitialFocusableElements();
 
                             element.on('keydown', onDialogKeyDownEvent);
@@ -160,13 +159,11 @@
                         });
                     };
 
-                    var getFocusableElements = function() {
+                    var setInitialFocusableElements = function () {
                         var focusableEls = element.find('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
 
                         focusableElems = Array.prototype.slice.call(focusableEls);
-                    };
 
-                    var setInitialFocusableElements = function () {
                         firstFocusableElem = focusableElems[0];
                         lastFocusableElem = focusableElems[focusableElems.length - 1];
                     };
@@ -176,7 +173,7 @@
 
                         switch(e.keyCode) {
                             case KEY_TAB:
-                                if (firstFocusableElem.length === 1) {
+                                if (focusableElems.length === 1) {
                                     e.preventDefault();
                                     break;
                                 }
@@ -216,6 +213,7 @@
                             scope.$emit('$close', args);
                             scope.$destroy();
                             scope = null;
+                            element.off('keydown', onDialogKeyDownEvent);
                             element.remove();
                             element = null;
                             popDialogFromStack();
