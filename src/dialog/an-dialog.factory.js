@@ -44,7 +44,7 @@
                     var modalElement = $body.find('.an-dialog-wrapper')[0];
 
                     if (stack.length && !modalElement.contains(ev.target)) {
-                        angular.element(modalElement).find(focusableElements)[0].focus();
+                        angular.element(modalElement).find(focusableElements).filter(':visible')[0].focus();
                     }
                 };
 
