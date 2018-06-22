@@ -7,6 +7,7 @@
             function($animate, $compile, $rootScope, $controller, $q, $http, $templateCache, anDialogUtils) {
                 var stack = [];
                 var startZindex = 3000;
+                var focusableElements = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]';
                 var $body = angular.element('body');
                 var orgOverflow = $body.css('overflow');
 
@@ -39,11 +40,20 @@
                     }
                 };
 
+                var onFocusIn = function (ev) {
+                    var modalElement = $body.find('.an-dialog-wrapper')[0];
+
+                    if (stack.length && !modalElement.contains(ev.target)) {
+                        angular.element(modalElement).find(focusableElements).filter(':visible')[0].focus();
+                    }
+                };
+
                 var addDialogToStack = function(dialog) {
                     if (!stack.length) {
                         $body.append('<div class="an-dialog-blanket"></div>');
                         $body.css('overflow', 'hidden');
                         $body.on('click', onBlanketClick);
+                        $body.on('focusin', onFocusIn);
                         document.addEventListener('keydown', onKeyDown);
                     }
                     stack.push(dialog);
@@ -60,6 +70,7 @@
 
                     if (!stack.length) {
                         $body.off('click', onBlanketClick);
+                        $body.off('focusin', onFocusIn);
                         getBlanket().remove();
                         $body.css('overflow', orgOverflow);
                         document.removeEventListener('keydown', onKeyDown);
@@ -142,7 +153,9 @@
 
                         return $q.all(options.promises).then(function() {
                             addDialogToStack(dialog);
+
                             $compile(element)(scope);
+
                             element.css('z-index', startZindex + stack.length * 2);
                             return $animate.enter(element, $body).then(function() {
                                 scope.$isLoading = false;
