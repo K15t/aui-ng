@@ -42,8 +42,21 @@
 
                 var onFocusIn = function (ev) {
                     var modalElement = $body.find('.an-dialog-wrapper')[0];
+                    var target = ev.target;
 
-                    if (stack.length && !modalElement.contains(ev.target)) {
+                    if (!stack.length) {
+                        return;
+                    }
+
+                    // In case the target element belongs to select2, dont't do anything.
+                    // Select2 injects the options list into the html body, so it is outside of the modal,
+                    // even if the select2 itself is used inside the modal.
+                    if (angular.element.fn && angular.element.fn.closest &&
+                        angular.element(target).closest('.select2-drop').length) {
+                        return;
+                    }
+
+                    if (!modalElement.contains(target)) {
                         angular.element(modalElement).find(focusableElements).filter(':visible')[0].focus();
                     }
                 };
