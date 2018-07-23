@@ -50,6 +50,11 @@
                         return ctrl.$modelValue;
                     }, function(newVal) {
                         $timeout(function() {
+                            // abort if select2 was already unmounted
+                            if (!elm.data('select2')) {
+                                return;
+                            }
+
                             var select2Opts = elm.data('select2').opts;
 
                             if (options.selectData) {
