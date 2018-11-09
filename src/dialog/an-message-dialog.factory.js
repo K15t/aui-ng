@@ -2,10 +2,15 @@
 
     'use strict';
 
-    angular.module('k15t.auiNg').
-        factory('anMessageDialog',
-            function(anSimpleDialog, $q, anDialogUtils) {
+    angular.module('k15t.auiNg')
+        .provider('anMessageDialog', function() {
+            var extendedOptions = {};
 
+            this.extendOptions = function(options) {
+                extendedOptions = options;
+            };
+
+            this.$get = ['anSimpleDialog', '$q', 'anDialogUtils', function(anSimpleDialog, $q, anDialogUtils) {
                 // jscs:disable
                 var defaultTemplate = [
                     '<div class="an-dialog-wrapper" ng-class="{\'an-dialog-loading\': $isLoading, \'an-dialog-loaded\': !$isLoading }">',
@@ -31,7 +36,6 @@
                 ].join('\n');
                 // jscs:enable
 
-
                 var defaults = {
                     template: function() {
                         return $q.when(defaultTemplate);
@@ -51,7 +55,7 @@
                 };
 
                 var create = function(message, opts) {
-                    return anSimpleDialog.create(anDialogUtils.extendOptions(defaults, {
+                    return anSimpleDialog.create(anDialogUtils.extendOptions(defaults, extendedOptions || {}, {
                         locals: {
                             labels: {
                                 cancel: 'Close'
@@ -64,6 +68,7 @@
                 return {
                     create: create
                 };
-            }
-    );
+            }];
+
+    });
 })(angular);

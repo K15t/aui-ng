@@ -1,10 +1,15 @@
 ;(function(angular) {
     'use strict';
 
-    angular.module('k15t.auiNg').
-        factory('anSimpleDialog',
-            function(anDialog, $q, anDialogUtils) {
+    angular.module('k15t.auiNg')
+        .provider('anSimpleDialog', function() {
+            var extendedOptions = {};
 
+            this.extendOptions = function(options) {
+                extendedOptions = options;
+            };
+
+            this.$get = ['anDialog', '$q', 'anDialogUtils', function(anDialog, $q, anDialogUtils) {
                 // jscs:disable
                 var defaultTemplate = [
                     '<div class="an-dialog-wrapper" ng-class="{\'an-dialog-loading\': $isLoading, \'an-dialog-loaded\': !$isLoading }">',
@@ -44,12 +49,12 @@
                 };
 
                 var create = function(opts) {
-                    return anDialog.create(anDialogUtils.extendOptions(defaults, opts));
+                    return anDialog.create(anDialogUtils.extendOptions(defaults, extendedOptions || {}, opts));
                 };
 
                 return {
                     create: create
                 };
-            }
-    );
+            }];
+        });
 })(angular);
