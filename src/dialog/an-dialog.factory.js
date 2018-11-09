@@ -2,9 +2,9 @@
 
     'use strict';
 
-    angular.module('k15t.auiNg').
-        factory('anDialog',
-            function($animate, $compile, $rootScope, $controller, $q, $http, $templateCache, anDialogUtils) {
+    angular.module('k15t.auiNg')
+        .factory('anDialog',
+            function($animate, $compile, $rootScope, $controller, $q, $http, $templateCache, anDialogUtils, AN_DIALOG_EXTEND_OPTIONS) {
                 var stack = [];
                 var startZindex = 3000;
                 var focusableElements = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]';
@@ -92,7 +92,7 @@
 
                 var getTemplate = function(template) {
                     if (typeof template === 'function') {
-                        return template();
+                        return $q.resolve(template());
                     }
                     return $http.get(template, {
                         cache: $templateCache
@@ -120,7 +120,7 @@
                         locals: {}
                     };
 
-                    var options = anDialogUtils.extendOptions(defaults, opts);
+                    var options = anDialogUtils.extendOptions(defaults, AN_DIALOG_EXTEND_OPTIONS || {}, opts);
                     var scope;
                     var element;
 
