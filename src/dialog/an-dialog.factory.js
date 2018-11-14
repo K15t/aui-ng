@@ -68,7 +68,20 @@
                             angular.element(modalElement).find(focusableElements).filter(':visible')[0].focus();
                         }
                     };
-    
+
+                    var styleBlanket = function(currentZindex) {
+                        getBlanket().css('z-index', currentZindex);
+                        setBlanketOpacity(currentZindex);
+                    };
+
+                    var setBlanketOpacity = function(currentZindex) {
+                        if (currentZindex >= startZindex + 2) {
+                            getBlanket().css('opacity', 0.6);
+                        } else {
+                            getBlanket().css('opacity', 0.5);
+                        }
+                    };
+
                     var addDialogToStack = function(dialog) {
                         if (!stack.length) {
                             $body.append('<div class="an-dialog-blanket"></div>');
@@ -77,8 +90,9 @@
                             $body.on('focusin', onFocusIn);
                             document.addEventListener('keydown', onKeyDown);
                         }
+
                         stack.push(dialog);
-                        getBlanket().css('z-index', startZindex + ((stack.length * 2) - 1));
+                        styleBlanket(startZindex + ((stack.length * 2) - 1));
                     };
     
                     var popDialogFromStack = function() {
@@ -87,8 +101,8 @@
                         }
     
                         stack.pop();
-                        getBlanket().css('z-index', startZindex + ((stack.length * 2) - 1));
-    
+                        styleBlanket(startZindex + ((stack.length * 2) - 1));
+
                         if (!stack.length) {
                             $body.off('click', onBlanketClick);
                             $body.off('focusin', onFocusIn);
