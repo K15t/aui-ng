@@ -69,17 +69,11 @@
                         }
                     };
 
-                    var styleBlanket = function(currentZindex) {
-                        getBlanket().css('z-index', currentZindex);
-                        setBlanketOpacity(currentZindex);
-                    };
-
-                    var setBlanketOpacity = function(currentZindex) {
-                        if (currentZindex >= startZindex + 2) {
-                            getBlanket().css('opacity', 0.6);
-                        } else {
-                            getBlanket().css('opacity', 0.5);
-                        }
+                    var updateBlanketStyles = function() {
+                        getBlanket().css({
+                            'z-index': startZindex + ((stack.length * 2) - 1),
+                            opacity: stack.length >= 2 ? 0.6 : 0.5
+                        });
                     };
 
                     var addDialogToStack = function(dialog) {
@@ -92,7 +86,7 @@
                         }
 
                         stack.push(dialog);
-                        styleBlanket(startZindex + ((stack.length * 2) - 1));
+                        updateBlanketStyles();
                     };
     
                     var popDialogFromStack = function() {
@@ -101,7 +95,7 @@
                         }
     
                         stack.pop();
-                        styleBlanket(startZindex + ((stack.length * 2) - 1));
+                        updateBlanketStyles();
 
                         if (!stack.length) {
                             $body.off('click', onBlanketClick);
