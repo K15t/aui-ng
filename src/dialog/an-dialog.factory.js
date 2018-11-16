@@ -30,9 +30,9 @@
                         '   </div>',
                         '</div>'
                     ].join('\n');
-    
-                    var getBlanket = function() {
-                        return $body.find('.an-dialog-blanket');
+
+                    var getBlanketById = function(id) {
+                        return $body.find('#' + id);
                     };
     
                     var onKeyDown = function(ev) {
@@ -69,24 +69,24 @@
                         }
                     };
 
-                    var updateBlanketStyles = function() {
-                        getBlanket().css({
+                    var updateBlanketStylesById = function(id) {
+                        getBlanketById(id).css({
                             'z-index': startZindex + ((stack.length * 2) - 1),
-                            opacity: stack.length >= 2 ? 0.6 : 0.5
+                            display: stack.length >= 2 ? 'block' : 'none'
                         });
                     };
 
                     var addDialogToStack = function(dialog) {
                         if (!stack.length) {
-                            $body.append('<div class="an-dialog-blanket"></div>');
+                            $body.append('<div id="an-dialog-blanket-static" class="an-dialog-blanket" style="' + startZindex + '"></div>');
+                            $body.append('<div id="an-dialog-blanket-dynamic" class="an-dialog-blanket" style="display: none;"></div>');
                             $body.css('overflow', 'hidden');
                             $body.on('click', onBlanketClick);
                             $body.on('focusin', onFocusIn);
                             document.addEventListener('keydown', onKeyDown);
                         }
-
                         stack.push(dialog);
-                        updateBlanketStyles();
+                        updateBlanketStylesById('an-dialog-blanket-dynamic');
                     };
     
                     var popDialogFromStack = function() {
@@ -95,12 +95,13 @@
                         }
     
                         stack.pop();
-                        updateBlanketStyles();
+                        updateBlanketStylesById('an-dialog-blanket-dynamic');
 
                         if (!stack.length) {
                             $body.off('click', onBlanketClick);
                             $body.off('focusin', onFocusIn);
-                            getBlanket().remove();
+                            getBlanketById('an-dialog-blanket-static').remove();
+                            getBlanketById('an-dialog-blanket-dynamic').remove();
                             $body.css('overflow', orgOverflow);
                             document.removeEventListener('keydown', onKeyDown);
                         }
