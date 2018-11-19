@@ -31,8 +31,8 @@
                         '</div>'
                     ].join('\n');
 
-                    var getBlanketById = function(id) {
-                        return $body.find('#' + id);
+                    var getBlanketsArray = function() {
+                        return Array.prototype.slice.call(document.querySelectorAll('.an-dialog-blanket'));
                     };
     
                     var onKeyDown = function(ev) {
@@ -69,24 +69,19 @@
                         }
                     };
 
-                    var updateBlanketStylesById = function(id) {
-                        getBlanketById(id).css({
-                            'z-index': startZindex + ((stack.length * 2) - 1),
-                            display: stack.length >= 2 ? 'block' : 'none'
-                        });
-                    };
-
                     var addDialogToStack = function(dialog) {
                         if (!stack.length) {
-                            $body.append('<div id="an-dialog-blanket-static" class="an-dialog-blanket" style="' + startZindex + '"></div>');
-                            $body.append('<div id="an-dialog-blanket-dynamic" class="an-dialog-blanket" style="display: none;"></div>');
                             $body.css('overflow', 'hidden');
                             $body.on('click', onBlanketClick);
                             $body.on('focusin', onFocusIn);
                             document.addEventListener('keydown', onKeyDown);
                         }
                         stack.push(dialog);
-                        updateBlanketStylesById('an-dialog-blanket-dynamic');
+
+                        $body.append('<div' +
+                            ' class="an-dialog-blanket"' +
+                            ' style="z-index: ' + (startZindex + ((stack.length * 2) - 1)) + '"' +
+                            '></div>')
                     };
     
                     var popDialogFromStack = function() {
@@ -95,13 +90,11 @@
                         }
     
                         stack.pop();
-                        updateBlanketStylesById('an-dialog-blanket-dynamic');
+                        getBlanketsArray().pop().remove();
 
                         if (!stack.length) {
                             $body.off('click', onBlanketClick);
                             $body.off('focusin', onFocusIn);
-                            getBlanketById('an-dialog-blanket-static').remove();
-                            getBlanketById('an-dialog-blanket-dynamic').remove();
                             $body.css('overflow', orgOverflow);
                             document.removeEventListener('keydown', onKeyDown);
                         }
