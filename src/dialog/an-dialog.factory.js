@@ -30,10 +30,6 @@
                         '   </div>',
                         '</div>'
                     ].join('\n');
-
-                    var getBlanketsArray = function() {
-                        return Array.prototype.slice.call(document.querySelectorAll('.an-dialog-blanket'));
-                    };
     
                     var onKeyDown = function(ev) {
                         if (stack.length && stack[stack.length - 1].options.closeOnEscape && ev.keyCode === 27) {
@@ -77,11 +73,6 @@
                             document.addEventListener('keydown', onKeyDown);
                         }
                         stack.push(dialog);
-
-                        $body.append('<div' +
-                            ' class="an-dialog-blanket"' +
-                            ' style="z-index: ' + (startZindex + ((stack.length * 2) - 1)) + '"' +
-                            '></div>')
                     };
     
                     var popDialogFromStack = function() {
@@ -90,7 +81,6 @@
                         }
     
                         stack.pop();
-                        getBlanketsArray().pop().remove();
 
                         if (!stack.length) {
                             $body.off('click', onBlanketClick);
@@ -133,6 +123,7 @@
                         var options = anDialogUtils.extendOptions(defaults, extendedOptions || {}, opts);
                         var scope;
                         var element;
+                        var $blanket = $('<div class="an-dialog-blanket"></div>');
     
                         var open = function() {
                             return getTemplate(options.template).then(function(wrapperContent) {
@@ -178,6 +169,9 @@
                                 addDialogToStack(dialog);
     
                                 $compile(element)(scope);
+
+                                $blanket.css('z-index', startZindex + ((stack.length * 2) - 1));
+                                $blanket.appendTo($body);
     
                                 element.css('z-index', startZindex + stack.length * 2);
                                 return $animate.enter(element, $body).then(function() {
@@ -198,6 +192,8 @@
                                 scope = null;
                                 element.remove();
                                 element = null;
+                                $blanket.remove();
+                                $blanket = null;
                                 popDialogFromStack();
                                 options.onClose.apply(null, args);
                             });
