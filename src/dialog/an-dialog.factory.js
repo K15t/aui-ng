@@ -31,10 +31,6 @@
                         '</div>'
                     ].join('\n');
     
-                    var getBlanket = function() {
-                        return $body.find('.an-dialog-blanket');
-                    };
-    
                     var onKeyDown = function(ev) {
                         if (stack.length && stack[stack.length - 1].options.closeOnEscape && ev.keyCode === 27) {
                             stack[stack.length - 1].scope.$close();
@@ -68,17 +64,15 @@
                             angular.element(modalElement).find(focusableElements).filter(':visible')[0].focus();
                         }
                     };
-    
+
                     var addDialogToStack = function(dialog) {
                         if (!stack.length) {
-                            $body.append('<div class="an-dialog-blanket"></div>');
                             $body.css('overflow', 'hidden');
                             $body.on('click', onBlanketClick);
                             $body.on('focusin', onFocusIn);
                             document.addEventListener('keydown', onKeyDown);
                         }
                         stack.push(dialog);
-                        getBlanket().css('z-index', startZindex + ((stack.length * 2) - 1));
                     };
     
                     var popDialogFromStack = function() {
@@ -87,12 +81,10 @@
                         }
     
                         stack.pop();
-                        getBlanket().css('z-index', startZindex + ((stack.length * 2) - 1));
-    
+
                         if (!stack.length) {
                             $body.off('click', onBlanketClick);
                             $body.off('focusin', onFocusIn);
-                            getBlanket().remove();
                             $body.css('overflow', orgOverflow);
                             document.removeEventListener('keydown', onKeyDown);
                         }
@@ -131,6 +123,7 @@
                         var options = anDialogUtils.extendOptions(defaults, extendedOptions || {}, opts);
                         var scope;
                         var element;
+                        var $blanket = $('<div class="an-dialog-blanket"></div>');
     
                         var open = function() {
                             return getTemplate(options.template).then(function(wrapperContent) {
@@ -176,6 +169,9 @@
                                 addDialogToStack(dialog);
     
                                 $compile(element)(scope);
+
+                                $blanket.css('z-index', startZindex + ((stack.length * 2) - 1));
+                                $blanket.appendTo($body);
     
                                 element.css('z-index', startZindex + stack.length * 2);
                                 return $animate.enter(element, $body).then(function() {
@@ -196,6 +192,8 @@
                                 scope = null;
                                 element.remove();
                                 element = null;
+                                $blanket.remove();
+                                $blanket = null;
                                 popDialogFromStack();
                                 options.onClose.apply(null, args);
                             });
