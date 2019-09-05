@@ -9,7 +9,6 @@
             var defaultTemplate = [
                 '<div ng-style="message.styleContainer" class="aui-message aui-message-{{ message.severity }} {{ message.severity }}">',
                 '   <p ng-if="message.title" class="title">',
-                '       <span class="aui-icon icon-{{ message.severity }}"></span>',
                 '       <strong ng-bind="message.title"></strong>',
                 '   </p>',
                 '   <div ng-style="message.styleMessageWrapper">',
