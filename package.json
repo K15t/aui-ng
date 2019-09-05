@@ -1,6 +1,6 @@
 {
   "name": "aui-ng",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "description": "Angular.JS AUI components",
   "main": "src/aui-ng.js",
   "scripts": {
